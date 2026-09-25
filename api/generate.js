@@ -49,13 +49,15 @@ ${jd}
 `;
 
         const response = await fetch(
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent",
             {
                 method: "POST",
+
                 headers: {
                     "Content-Type": "application/json",
                     "x-goog-api-key": process.env.GEMINI_API_KEY
                 },
+
                 body: JSON.stringify({
                     contents: [
                         {
@@ -67,10 +69,11 @@ ${jd}
                             ]
                         }
                     ],
+
                     generationConfig: {
-                        temperature: 0.35,
-                        maxOutputTokens: 12000,
-                        topP: 0.9
+                        thinkingConfig: {
+                            thinkingLevel: "medium"
+                        }
                     }
                 })
             }
@@ -109,7 +112,8 @@ ${jd}
         console.error("Server error:", error);
 
         return res.status(500).json({
-            error: "Something went wrong while generating the resume."
+            error:
+                "Something went wrong while generating the resume."
         });
     }
 }
